@@ -68,7 +68,5 @@ namespace KeyboardSimulator
             Thread Executer = new(new ThreadStart(Keyboard.Simulator));
             Executer.Start();
         }
-
-
     }
 }
