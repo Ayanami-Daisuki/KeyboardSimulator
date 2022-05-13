@@ -1,0 +1,11 @@
+D:\Files\Documents\C#\KeyboardSimulator(DNF)\obj\Debug\KeyboardSimulator(DNF).csproj.AssemblyReference.cache
+D:\Files\Documents\C#\KeyboardSimulator(DNF)\obj\Debug\KeyboardSimulator(DNF).csproj.SuggestedBindingRedirects.cache
+D:\Files\Documents\C#\KeyboardSimulator(DNF)\obj\Debug\KeyboardSimulator_DNF_.Properties.Resources.resources
+D:\Files\Documents\C#\KeyboardSimulator(DNF)\obj\Debug\KeyboardSimulator(DNF).csproj.GenerateResource.cache
+D:\Files\Documents\C#\KeyboardSimulator(DNF)\obj\Debug\KeyboardSimulator(DNF).csproj.CoreCompileInputs.cache
+D:\Files\Documents\C#\KeyboardSimulator(DNF)\bin\Debug\KeyboardSimulator(DNF).exe.config
+D:\Files\Documents\C#\KeyboardSimulator(DNF)\bin\Debug\KeyboardSimulator(DNF).exe
+D:\Files\Documents\C#\KeyboardSimulator(DNF)\bin\Debug\KeyboardSimulator(DNF).pdb
+D:\Files\Documents\C#\KeyboardSimulator(DNF)\obj\Debug\KeyboardSimulator(DNF).exe
+D:\Files\Documents\C#\KeyboardSimulator(DNF)\obj\Debug\KeyboardSimulator(DNF).pdb
+D:\Files\Documents\C#\KeyboardSimulator(DNF)\obj\Debug\KeyboardSimulator.GUI.resources

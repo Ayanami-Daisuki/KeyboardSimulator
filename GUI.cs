@@ -1,27 +1,46 @@
+ï»¿using System;
+using System.Drawing;
+using System.Threading;
+using System.Windows.Forms;
+
 namespace KeyboardSimulator
 {
     public partial class GUI : Form
     {
+        private Thread Executer = null;
+        private int Time = 1000;
         public GUI()
         {
             InitializeComponent();
+            DelayTime.Text = "1000";
         }
-
         private void Input_TextChanged(object sender, EventArgs e)
         {
             Keyboard.Text = Input.Text;
         }
-
         private void Help_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("±¾Èí¼þÓÃÓÚÄ£Äâ¼üÅÌÊäÈë£¬¿ÉÄ£ÄâÊäÈëÖÐÎÄ¡£\n" +
-                "Äã¿ÉÒÔÒ»´ÎÐÔ¼üÈëËùÓÐÒªÕ³ÌùµÄÄÚÈÝµ½ÎÄ±¾¿òÄÚ¡£\n" +
-                "µã»÷ ¡°Õ³Ìù£¡¡± °´Å¥ºó£¬½«ÑÓ³ÙÈýÃëÖ´ÐÐÄ£ÄâÊäÈë¡£\n" +
-                "£¡£¡£¡£¡£¡ÇëÏÈÇÐ»»³ÉÓ¢ÎÄÊäÈë·¨£¡£¡£¡£¡£¡");
+            MessageBox.Show("ï¼ï¼ï¼ï¼ï¼è¯·å…ˆåˆ‡æ¢æˆè‹±æ–‡è¾“å…¥æ³•ï¼ï¼ï¼ï¼ï¼\n" +
+                "\n\n" +
+                "æœ¬è½¯ä»¶ç”¨äºŽæ¨¡æ‹Ÿé”®ç›˜è¾“å…¥ï¼Œå¯æ¨¡æ‹Ÿè¾“å…¥ä¸­æ–‡ã€‚\n" +
+                "ç‚¹å‡» ã€Œç²˜è´´ï¼ã€æŒ‰é’®åŽï¼Œå°†å»¶è¿Ÿä¸€å®šæ—¶é—´åŽå†æ‰§è¡Œæ¨¡æ‹Ÿè¾“å…¥ã€‚\n" +
+                "\n" +
+                "å¦å¤–ï¼Œã€Œä¸­æ–­ç²˜è´´ã€æ˜¯åœ¨ç²˜è´´å‡ºçŽ°é—®é¢˜æ—¶å¼ºåˆ¶ç»ˆæ­¢çš„æŒ‰é’®ã€‚");
         }
-
         public static class Keyboard
         {
+            private static bool simulateMode = false;
+            private static int time = 1000;
+            public static int Time
+            {
+                get => time;
+                set => time = value;
+            }
+            public static bool SimulateMode
+            {
+                get => simulateMode;
+                set => simulateMode = value;
+            }
             private static string text = "";
             public static string Text
             {
@@ -31,7 +50,8 @@ namespace KeyboardSimulator
             public static void Simulator()
             {
                 string KeyStream = "";
-                for (int i = 0; i < Text.Length; i++)
+                string Temp = Text;
+                for (int i = 0; i < Temp.Length; i++)
                 {
                     switch (Text[i])
                     {
@@ -54,19 +74,57 @@ namespace KeyboardSimulator
                             KeyStream += "{)}";
                             break;
                         default:
-                            KeyStream += Text[i];
+                            KeyStream += Temp[i];
                             break;
                     }
                 }
-                Thread.Sleep(1000);
-                SendKeys.SendWait(KeyStream);
+                Thread.Sleep(Time);
+                if (!SimulateMode)
+                    SendKeys.SendWait(KeyStream);
+                else
+                {
+                    Random Generator = new Random();
+                    for (int i = 0; i < KeyStream.Length; i++)
+                    {
+                        for (int j = 0; j < Generator.Next(2, 6); j++)
+                        {
+                            if (i >= KeyStream.Length)
+                                break;
+                            SendKeys.SendWait("" + KeyStream[i]);
+                            i++;
+                        }
+                        Thread.Sleep(Generator.Next(1000, 2000));
+                    }
+                }
             }
         }
-
         private void Start_Click(object sender, EventArgs e)
         {
-            Thread Executer = new(new ThreadStart(Keyboard.Simulator));
+            Keyboard.SimulateMode = SimulateMode.Checked;
+            Keyboard.Time = Time;
+            Executer = new Thread(new ThreadStart(Keyboard.Simulator));
             Executer.Start();
+        }
+        protected override void OnLayout(LayoutEventArgs levent)
+        {
+            base.OnLayout(levent);
+            Start.Size = new Size(100, 30);
+        }
+        private void Stop_Click(object sender, EventArgs e)
+        {
+            if (Executer != null)
+                Executer.Abort();
+        }
+        private void DelayTime_TextChanged(object sender, EventArgs e)
+        {
+            if (DelayTime.Text.Length == 0) DelayTime.Text = "0";
+            if ('0' > DelayTime.Text[DelayTime.Text.Length - 1] || DelayTime.Text[DelayTime.Text.Length - 1] > '9')
+                DelayTime.Text = DelayTime.Text.Substring(0, DelayTime.Text.Length - 1);
+            else
+            {
+                if (!int.TryParse(DelayTime.Text, out Time))
+                    DelayTime.Text = "1000";
+            }
         }
     }
 }
