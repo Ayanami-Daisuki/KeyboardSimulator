@@ -9,6 +9,7 @@
 		<ApplicationIcon>Visual Studio.ico</ApplicationIcon>
 		<StartupObject>KeyboardSimulator.MainProgram</StartupObject>
 		<PlatformTarget>x64</PlatformTarget>
+		<Platforms>x64</Platforms>
 	</PropertyGroup>
 
 	<ItemGroup>
