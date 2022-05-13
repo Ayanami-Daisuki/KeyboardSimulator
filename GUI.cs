@@ -93,7 +93,7 @@ namespace KeyboardSimulator
                             SendKeys.SendWait("" + KeyStream[i]);
                             i++;
                         }
-                        Thread.Sleep(Generator.Next(1000, 2000));
+                        Thread.Sleep(Generator.Next(500, 1000));
                     }
                 }
             }
@@ -104,6 +104,11 @@ namespace KeyboardSimulator
             Keyboard.Time = Time;
             Executer = new Thread(new ThreadStart(Keyboard.Simulator));
             Executer.Start();
+            while (Executer.IsAlive)
+            {
+                Application.DoEvents();
+            }
+            MessageBox.Show("粘贴完成");
         }
         protected override void OnLayout(LayoutEventArgs levent)
         {
